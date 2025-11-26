@@ -1,0 +1,48 @@
+SRC_DIR=./src
+BUILD_DIR=./build/target/elks
+#ifndef TOPDIR
+#$(error ELKS TOPDIR is not defined)
+#endif
+
+BIN=../../sources/8086-toolchain/host-bin/
+CPP=$(BIN)cpp86
+CC=$(BIN)c86
+AS=$(BIN)as86
+LD=$(BIN)ld86
+
+C86LIB=$(TOPDIR)/libc
+INCLUDES=-I$(TOPDIR)/libc/include -I$(TOPDIR)/elks/include -I$(C86LIB)/include/c86
+DEFINES=
+
+CPPFLAGS=-0 $(INCLUDES) $(DEFINES)
+CFLAGS=-g -O -bas86 -warn=4 -lang=c99
+CFLAGS+=-align=yes -separate=yes -stackopt=minimum -peep=all -stackcheck=no
+#ASFLAGS=-0 -j -O -w-
+ASFLAGS=-0 -j
+LDFLAGS=-0 -i -L$(C86LIB)
+LDLIBS=-lc86
+
+all: $(BUILD_DIR)/bin/main
+
+$(BUILD_DIR)/bin/main: $(BUILD_DIR)/main.o $(BUILD_DIR) $(BUILD_DIR)/bin
+	$(LD) $(LDFLAGS) $(LDLIBS) -o $(BUILD_DIR)/bin/main $(BUILD_DIR)/main.o
+
+$(BUILD_DIR)/main.i: $(SRC_DIR)/main.c $(BUILD_DIR)
+	$(CPP) $(CPPFLAGS) $(SRC_DIR)/main.c -o $(BUILD_DIR)/main.i
+
+$(BUILD_DIR)/main.as: $(BUILD_DIR)/main.i $(BUILD_DIR)
+	$(CC) $(CFLAGS) $(BUILD_DIR)/main.i $(BUILD_DIR)/main.as
+
+$(BUILD_DIR)/main.o: $(BUILD_DIR)/main.as $(BUILD_DIR)
+	$(AS) $(ASFLAGS) -o $(BUILD_DIR)/main.o -l $(BUILD_DIR)/main.lst $(BUILD_DIR)/main.as
+
+$(BUILD_DIR):
+	mkdir -p $(BUILD_DIR)
+
+$(BUILD_DIR)/bin:
+	mkdir -p $(BUILD_DIR)/bin
+
+.PHONY: all clean
+
+clean:
+	rm -rf $(BUILD_DIR)
