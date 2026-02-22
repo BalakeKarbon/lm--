@@ -1,7 +1,13 @@
 SRC_DIR=./src
-BUILD_DIR=./build/target/6502
+BUILD_DIR=./build/target/c64
 
-CC=cc65
+#TO-DO:
+#cc65 -t c64 your_program.c
+#ca65 your_program.s
+#ld65 -t c64 -o your_program.prg your_program.o
+
+
+CC=gcc
 
 INCLUDES=
 DEFINES=
