@@ -1,0 +1,2 @@
+- Make a DOS target
+- Separate the NN library and the implementation

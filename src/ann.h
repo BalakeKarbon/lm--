@@ -1,10 +1,10 @@
-#ifndef FIXEDPOINT
-#define FIXEDPOINT
+#ifndef ANN
+#define ANN
 
 #include <stdint.h>
 
 typedef struct {
 	// Fixed Point Stuff
-} FP;
+} Neuron;
 
 #endif
