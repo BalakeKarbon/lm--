@@ -1,3 +1,4 @@
 - Make a DOS target
+- Target RCA 1802
 - Separate the NN library and the implementation
 - Make varying levels of training and runtime programs to allow quick training and debug on powerful systems but runtime on limited devices.
