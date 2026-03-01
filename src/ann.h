@@ -12,6 +12,9 @@
  * capability targeted at our system but allow crazy stuff like 64 bit fixed
  * point maybe even floating point. I would not worry about threading yet though?.
  * An impractically flexible NN library.
+ *
+ * We also want to make sure we can add or remove parts during build as we have
+ * insane memory limitations.
  */
 
 // Implement a directed cyclic graph
